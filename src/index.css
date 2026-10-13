@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-purple: #a855f7;
+  --neon-blue: #22d3ee;
+  --neon-pink: #ff2d95;
+  --neon-green: #b6ff3c;
+  color-scheme: dark;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #050507;
+  color: #eaeaf5;
+  font-family: 'Rajdhani', system-ui, sans-serif;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+body[data-no-scroll='true'] {
+  overflow: hidden;
+}
+
+@layer components {
+  .font-display {
+    font-family: 'Anton', 'Bebas Neue', Impact, sans-serif;
+    letter-spacing: 0.04em;
+  }
+
+  .graffiti {
+    font-family: 'Anton', Impact, sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #fff 0%, #c9c9ff 40%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 14px rgba(168, 85, 247, 0.55));
+  }
+
+  .neon-text {
+    text-shadow:
+      0 0 6px currentColor,
+      0 0 22px currentColor;
+  }
+
+  .panel {
+    background: linear-gradient(160deg, rgba(20, 20, 31, 0.92), rgba(8, 8, 14, 0.94));
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    box-shadow:
+      inset 0 0 40px rgba(168, 85, 247, 0.08),
+      0 20px 60px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+  }
+
+  .panel-pink {
+    border-color: rgba(255, 45, 149, 0.4);
+    box-shadow:
+      inset 0 0 40px rgba(255, 45, 149, 0.1),
+      0 20px 60px rgba(0, 0, 0, 0.6);
+  }
+
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 font-display uppercase tracking-widest transition-transform duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-blue disabled:opacity-40;
+  }
+  .btn:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  .btn-neon {
+    color: #050507;
+    background: linear-gradient(180deg, var(--neon-green), #7fd11a);
+    box-shadow:
+      0 0 12px rgba(182, 255, 60, 0.7),
+      0 0 40px rgba(182, 255, 60, 0.25);
+  }
+  .btn-neon:hover {
+    box-shadow:
+      0 0 18px rgba(182, 255, 60, 0.95),
+      0 0 60px rgba(182, 255, 60, 0.4);
+  }
+
+  .btn-ghost {
+    color: #eaeaf5;
+    background: rgba(20, 20, 31, 0.7);
+    border: 1px solid rgba(168, 85, 247, 0.5);
+  }
+  .btn-ghost:hover {
+    border-color: var(--neon-blue);
+    color: var(--neon-blue);
+    box-shadow: 0 0 18px rgba(34, 211, 238, 0.35);
+  }
+
+  .btn-pink {
+    color: #fff;
+    background: linear-gradient(180deg, var(--neon-pink), #b31263);
+    box-shadow: 0 0 14px rgba(255, 45, 149, 0.6);
+  }
+
+  .keycap {
+    @apply inline-flex min-w-[2rem] items-center justify-center rounded border px-2 py-1 text-xs font-bold uppercase;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(10, 10, 18, 0.85);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.6);
+  }
+
+  .hud-chip {
+    @apply rounded border px-2 py-1 text-xs font-semibold uppercase tracking-wider;
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(8, 8, 14, 0.7);
+  }
+}
+
+@layer utilities {
+  .stage-grid {
+    background-image:
+      linear-gradient(rgba(34, 211, 238, 0.28) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168, 85, 247, 0.28) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(220px) rotateX(58deg);
+    transform-origin: bottom center;
+  }
+
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .text-outline {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Respect reduced motion preference */
+[data-reduced-motion='true'] *,
+[data-reduced-motion='true'] *::before,
+[data-reduced-motion='true'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.5);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 10, 18, 0.6);
+}
